@@ -1,5 +1,25 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
+
+def phone_number_validator(value):
+    if len(value) != 10:
+        raise ValidationError(
+            _('%(value)s is not a valid phone number.'),
+            params={'value': value},
+        )
+    for x in value:
+        if x > '9' or x < '0':
+            raise ValidationError(
+                _('%(value)s is not a valid phone number.'),
+                params={'value': value},
+            ) 
+    if value[0] != '0':
+        raise ValidationError(
+            _('%(value)s is not a valid phone number.'),
+            params={'value': value},
+        )
 
 class Subject(models.Model):
     name = models.CharField(max_length=264)
@@ -8,7 +28,8 @@ class Subject(models.Model):
         return self.name
 
 class User(AbstractUser):
-    phone_number = models.CharField(max_length=10,blank=False)
+    phone_number = models.CharField(max_length=10,blank=False, validators=[phone_number_validator])
+    email = models.EmailField(unique=True)
     is_student = models.BooleanField(default=False)
     is_teacher = models.BooleanField(default=False)
 
