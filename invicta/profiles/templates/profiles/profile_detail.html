@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    <h1>TEACHER PROFILE</h1>
+    <div class="container">
+        <h1>{{profile.teacher.first_name}} {{profile.teacher.last_name}}</h1>
+        <br>
+        <img src=" {{ profile.avatar.url }}">
+        <p> {{profile.teacher.teacher.subject}} teacher </p>
+        <h1>{{profile.teacher.teacher.description}}</h1>
+    </div>
+{% endblock content %}
