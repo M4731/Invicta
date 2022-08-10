@@ -43,9 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap5',
-    'multiselectfield',
     'accounts',
-    'lessons',
 ]
 
 MIDDLEWARE = [
