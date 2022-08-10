@@ -1,0 +1,15 @@
+{% extends "lessons/lesson_base.html" %}
+{% load bootstrap5 %}
+
+{% block inside %}
+    <h4>Add a New Lesson Time</h4>
+    <br>
+    <p>Day format : YYYY-MM-DD</p>
+    </br>
+    
+    <form method="POST" action="{% url 'lessons:create_program' %}" id="lessonForm">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <input type="submit" value="Create" class="btn btn-primary btn-large">
+    </form>
+{% endblock %}
