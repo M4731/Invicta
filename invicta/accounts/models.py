@@ -28,7 +28,7 @@ class Subject(models.Model):
         return self.name
 
 class User(AbstractUser):
-    phone_number = models.CharField(max_length=10,blank=False, validators=[phone_number_validator])
+    phone_number = models.CharField(max_length=10,blank=False, validators=[phone_number_validator], unique=True)
     email = models.EmailField(unique=True)
     is_student = models.BooleanField(default=False)
     is_teacher = models.BooleanField(default=False)
