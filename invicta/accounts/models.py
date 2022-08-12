@@ -38,7 +38,6 @@ class User(AbstractUser):
 
 class Teacher(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    description = models.TextField()
     subject = models.ForeignKey(Subject, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):

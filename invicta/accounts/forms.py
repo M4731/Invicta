@@ -23,7 +23,6 @@ class StudentSignUpForm(UserCreationForm):
         self.fields["phone_number"].label = "Phone Number"
 
 class TeacherSignUpForm(UserCreationForm):
-    description = forms.CharField()
     subject = forms.ModelChoiceField(
         queryset=Subject.objects.all()
     )
@@ -38,7 +37,6 @@ class TeacherSignUpForm(UserCreationForm):
         user.save()
 
         teacher = Teacher.objects.create(user=user)
-        teacher.description = self.cleaned_data.get('description')
         teacher.subject = self.cleaned_data.get('subject')
         teacher.save()
 
@@ -51,4 +49,3 @@ class TeacherSignUpForm(UserCreationForm):
         self.fields["last_name"].label = "Last Name"
         self.fields["email"].label = "Email Address"
         self.fields["phone_number"].label = "Phone Number"
-        self.fields["description"].label = "Description"
