@@ -5,7 +5,9 @@
     <h1>TEACHER PROFILE</h1>
 
     {% if user.is_teacher %}
-        <a class="btn btn-primary" href="{% url 'profiles:profile_update' slug=profile.slug %}">UPDATE YOUR PROFILE</a>
+        {% if profile.teacher.user == user %}
+            <a class="btn btn-primary" href="{% url 'profiles:profile_update' slug=profile.slug %}">UPDATE YOUR PROFILE</a>
+        {% endif %}
     {% endif %}
 
     <div class="container">
