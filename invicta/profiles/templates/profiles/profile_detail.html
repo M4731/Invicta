@@ -10,6 +10,10 @@
         {% endif %}
     {% endif %}
 
+    {% if user.is_student %}
+        <a class="btn btn-primary" href="{% url 'lessons:create_lesson' pk=profile.teacher.pk %}">BOOK A LESSON!</a>
+    {% endif %}
+
     <div class="container">
         <h1>{{profile.teacher.user.first_name}} {{profile.teacher.user.last_name}}</h1>
         <br>

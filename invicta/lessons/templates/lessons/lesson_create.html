@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load bootstrap5 %}
+
+{% block content %}
+    <h4>Create A New Lesson</h4>
+    {{ request.get_full_path }} 
+    
+    <form method="POST" action="{% url 'lessons:create_lesson' pk=teacher_id %}" id="lessonForm">
+        {% comment %} <input type = "hidden" name = "teacher_id" value="{{teacher.pk}}"> {% endcomment %}
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <input type="submit" value="Create" class="btn btn-primary btn-large">
+    </form>
+{% endblock %}

@@ -13,4 +13,5 @@ urlpatterns = [
     path('accounts/',include('django.contrib.auth.urls')),
     path('profiles/',include('profiles.urls', namespace='profiles')),
     path('teachers',views.ListTeachers.as_view(),name="all_teachers"),
+    path('lessons/',include('lessons.urls', namespace='lessons')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
