@@ -8,6 +8,7 @@ class Lesson(models.Model):
     sent_date = models.DateField(auto_now_add=True)
     accepted = models.BooleanField(default=False)
     planned_date = models.DateField(auto_now_add=False, null=True, blank=True)
+    planned_time = models.CharField(max_length=164, null=True, blank=True)
     description = models.TextField()
     time_description = models.TextField(default="Sunt liber oricand.")
 
