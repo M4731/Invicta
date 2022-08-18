@@ -49,3 +49,17 @@ class TeacherLessons(generic.ListView):
         lesson_object.save()
 
         return HttpResponseRedirect(request.path)
+
+class StudentLessons(generic.ListView):
+    model = Lesson
+    template_name = 'lessons/student_lessons_list.html'
+
+    def get_queryset(self):
+        queryset = super(StudentLessons, self).get_queryset()
+        queryset = queryset.filter(user=self.request.user)
+        return queryset
+
+    def get_context_data(self,**kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user'] = self.request.user
+        return context

@@ -43,6 +43,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'all_teachers' %}">Teachers List</a>
                         </li> 
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'lessons:student_lessons' pk=user.pk %}">My Lessons</a>
+                        </li> 
                     {% endif %}
                 {% else %}
                     <li class="nav-item">
