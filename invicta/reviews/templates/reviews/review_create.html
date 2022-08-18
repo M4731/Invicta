@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load bootstrap5 %}
+
+{% block content %}
+    <h4>Create A New Review</h4>
+    
+    <form method="POST" action="{% url 'reviews:create_review' pk=teacher_object.user.pk %}" id="review_form">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <input type="submit" value="Submit" class="btn btn-primary btn-large">
+    </form>
+{% endblock %}

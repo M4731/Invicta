@@ -12,6 +12,7 @@
 
     {% if user.is_student %}
         <a class="btn btn-primary" href="{% url 'lessons:create_lesson' pk=profile.teacher.pk %}">BOOK A LESSON!</a>
+        <a class="btn btn-primary" href="{% url 'reviews:create_review' pk=profile.teacher.pk %}">LEAVE A REVIEW!</a>
     {% endif %}
 
     <div class="container">

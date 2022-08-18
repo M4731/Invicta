@@ -15,7 +15,8 @@ urlpatterns = [
     path('profiles/',include('profiles.urls', namespace='profiles')),
     path('teachers',views.ListTeachers.as_view(),name="all_teachers"),
     path('lessons/',include('lessons.urls', namespace='lessons')),
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 
+    path('reviews/',include('reviews.urls', namespace='reviews')),
+]
 
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 
 urlpatterns += static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
-# + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
