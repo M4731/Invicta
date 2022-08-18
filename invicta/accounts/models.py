@@ -39,6 +39,7 @@ class User(AbstractUser):
 class Teacher(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     subject = models.ForeignKey(Subject, on_delete=models.SET_NULL, null=True)
+    price = models.IntegerField(default=100)
 
     def __str__(self):
         return self.user.first_name + ' ' + self.user.last_name

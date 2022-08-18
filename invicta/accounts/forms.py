@@ -27,6 +27,8 @@ class TeacherSignUpForm(UserCreationForm):
         queryset=Subject.objects.all()
     )
 
+    price = forms.IntegerField()
+
     class Meta(UserCreationForm.Meta):
         fields = ("username", "first_name", "last_name", "phone_number", "email", "password1", "password2")
         model = User
@@ -38,6 +40,7 @@ class TeacherSignUpForm(UserCreationForm):
 
         teacher = Teacher.objects.create(user=user)
         teacher.subject = self.cleaned_data.get('subject')
+        teacher.price = self.cleaned_data.get('price')
         teacher.save()
 
         return user
