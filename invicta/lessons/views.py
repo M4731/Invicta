@@ -7,6 +7,11 @@ from lessons.models import Lesson
 from accounts.models import Teacher
 from django.http.response import HttpResponseRedirect
 import datetime
+from django.template.loader import render_to_string, get_template
+from django.core.mail import EmailMessage, message, send_mail
+from django.conf import settings
+import smtplib
+import logging
 
 class CreateLesson(LoginRequiredMixin, generic.CreateView):
     fields = ("description", "time_description")
@@ -48,6 +53,32 @@ class TeacherLessons(generic.ListView):
         lesson_object.planned_date = date
         lesson_object.planned_time = time
         lesson_object.save()
+
+        data = {
+            "student_fname":lesson_object.user.first_name,
+            "student_lname":lesson_object.user.last_name,
+            "teacher_fname":lesson_object.teacher.user.first_name,
+            "teacher_lname":lesson_object.teacher.user.last_name,
+            "date":lesson_object.planned_date,
+            "time":lesson_object.planned_time,
+        }
+
+        message = get_template('lessons/lesson_confirmation_email.html').render(data)
+        title = "Lesson Approvement (DO NOT REPLY)"
+        send_mail(title, message, settings.EMAIL_HOST_USER, [lesson_object.user.email])
+
+        # # try:
+        # server = smtplib.SMTP("smtp.gmail.com", 587)
+        # server.ehlo()
+        # server.starttls()
+        # server.login(settings.EMAIL_HOST_USER, settings.EMAIL_HOST_PASSWORD)
+        # server.sendmail(settings.EMAIL_HOST_USER, [lesson_object.user.email], message)
+        # server.close()
+        # logging.info('successfully sent the mail')
+        # # except:
+        # #     logging.error("failed to send mail") 
+
+        messages.add_message(request, messages.SUCCESS, f"You accepted the appointment of {lesson_object.user.first_name} {lesson_object.user.last_name}")
 
         return HttpResponseRedirect(request.path)
 
