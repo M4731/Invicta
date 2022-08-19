@@ -32,6 +32,7 @@ class CreateReview(LoginRequiredMixin, generic.CreateView):
 class StudentReviews(generic.ListView):
     model = Review
     template_name = 'reviews/student_reviews_list.html'
+    paginate_by = 5
 
     def get_queryset(self):
         queryset = super(StudentReviews, self).get_queryset()
@@ -69,6 +70,7 @@ class UpdateReview(LoginRequiredMixin,generic.UpdateView):
 class TeacherReviews(generic.ListView):
     model = Review
     template_name = 'reviews/teacher_reviews_list.html'
+    paginate_by = 5
 
     def get_queryset(self):
         queryset = super(TeacherReviews, self).get_queryset()

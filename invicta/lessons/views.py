@@ -26,6 +26,7 @@ class CreateLesson(LoginRequiredMixin, generic.CreateView):
 class TeacherLessons(generic.ListView):
     model = Lesson
     template_name = 'lessons/teacher_lessons_list.html'
+    paginate_by = 5
 
     def get_queryset(self):
         queryset = super(TeacherLessons, self).get_queryset()
@@ -53,6 +54,7 @@ class TeacherLessons(generic.ListView):
 class StudentLessons(generic.ListView):
     model = Lesson
     template_name = 'lessons/student_lessons_list.html'
+    paginate_by = 5
 
     def get_queryset(self):
         queryset = super(StudentLessons, self).get_queryset()
