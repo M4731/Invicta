@@ -15,7 +15,8 @@
                 <p>Rating: {{ review.rating }}</p>
             </div>
         {% endfor %}
+        
+        {% include "_pagination.html" %}
     </div>
 
-    {% include "_pagination.html" %}
 {% endblock %}
