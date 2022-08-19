@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="col-md-4">
+        <h1>@{{ user.username }}</h1>
+        <p>Reviews</p>
+    </div>
+
+    <div class="col-md-8">
+        {% for review in object_list  %}
+            <div class="review_list_div">
+                <p>Teacher Username: {{ review.teacher.user.username }}</p>
+                <p>Sent Date: {{ review.sent_date }}</p>
+                <p>Details: {{ review.description }}</p>
+                <p>Rating: {{ review.rating }}</p>
+                
+                <div class="col-lg-12">
+                    <a class="btn btn-danger" href="{% url 'reviews:delete_review' pk=review.pk %}">DELETE</a>
+                    <a class="btn btn-warning" href="{% url 'reviews:update_review' pk=review.pk %}">UPDATE</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

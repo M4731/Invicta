@@ -17,9 +17,10 @@
 
     <div class="container">
         <h1>{{profile.teacher.user.first_name}} {{profile.teacher.user.last_name}}</h1>
+        <p>rating: {{profile.teacher.get_teacher_rating}}</p>
         <br>
         <img src=" {{ profile.avatar.url }}">
         <p> {{profile.teacher.subject}} teacher </p>
-        <h1>{{profile.description}}</h1>
+        <p>{{profile.description}}</p>
     </div>
 {% endblock content %}

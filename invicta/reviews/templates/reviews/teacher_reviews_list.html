@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="col-md-4">
+        <h1>@{{ teacher.user.username }}</h1>
+        <p>Reviews</p>
+    </div>
+
+    <div class="col-md-8">
+        {% for review in object_list  %}
+            <div class="review_list_div">
+                <p>Student Username: {{ review.user.username }}</p>
+                <p>Sent Date: {{ review.sent_date }}</p>
+                <p>Details: {{ review.description }}</p>
+                <p>Rating: {{ review.rating }}</p>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -36,3 +36,4 @@ class Review(models.Model):
             super(Review, self).save(*args, **kwargs)
         except IntegrityError:
             logging.error("You already left a review for this teacher!")
+            # raise Exception("You already left a review for this teacher!")

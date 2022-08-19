@@ -38,6 +38,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'lessons:appending_lessons' pk=user.teacher.pk %}">My Lessons</a>
                         </li> 
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'reviews:teacher_reviews' pk=user.teacher.pk %}">My Reviews</a>
+                        </li> 
                     {% endif %}
                     {% if user.is_student %}
                         <li class="nav-item">
@@ -45,6 +48,9 @@
                         </li> 
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'lessons:student_lessons' pk=user.pk %}">My Lessons</a>
+                        </li> 
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'reviews:student_reviews' pk=user.pk %}">My Reviews</a>
                         </li> 
                     {% endif %}
                 {% else %}

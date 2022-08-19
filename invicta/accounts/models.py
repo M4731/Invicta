@@ -43,3 +43,13 @@ class Teacher(models.Model):
 
     def __str__(self):
         return self.user.first_name + ' ' + self.user.last_name
+
+    def get_teacher_rating(self):
+        x = 0
+        i = 0
+        reviews = self.review_set.all()
+        for review in reviews:
+            x += review.rating
+            i += 1
+        return x/i
+ 
