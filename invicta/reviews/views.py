@@ -6,7 +6,7 @@ from django.views import generic
 from django.db import IntegrityError
 import logging
 from invicta.decorators import student_required, teacher_required
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.contrib import messages
 
 class CreateReview(LoginRequiredMixin, generic.CreateView):
@@ -14,20 +14,21 @@ class CreateReview(LoginRequiredMixin, generic.CreateView):
     model = Review
     template_name = 'reviews/review_create.html'
 
-    # try: 
-    #     model.save()
-    # except Exception:
-    #     logging.error("merge?")
-
     def form_valid(self, form):
         form.instance.user = self.request.user
         form.instance.teacher = Teacher.objects.get(pk=self.kwargs.get('pk'))
+
+        # if len(Review.objects.all(user=self.request.user, teacher=Teacher.objects.get(pk=self.kwargs.get('pk')))) != 0:
+        #     return reverse('reviews:student_reviews', kwargs=self.request.user.pk)
         return super(CreateReview, self).form_valid(form)
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['teacher_object'] = Teacher.objects.get(pk=self.kwargs.get('pk'))
         return context
+
+    def get_success_url(self, **kwargs):
+        return reverse_lazy("reviews:student_reviews", kwargs={'pk': self.request.user.pk})
 
 class StudentReviews(generic.ListView):
     model = Review
