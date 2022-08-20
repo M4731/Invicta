@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib import messages
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views import generic
 from lessons.models import Lesson
 from accounts.models import Teacher
@@ -27,6 +27,24 @@ class CreateLesson(LoginRequiredMixin, generic.CreateView):
         context = super().get_context_data(**kwargs)
         context['teacher_id'] = Teacher.objects.get(pk=self.kwargs.get('pk')).pk
         return context
+
+    def get_success_url(self):
+        lesson_id = self.object.id
+        lesson_object = Lesson.objects.get(id=lesson_id)
+
+        data = {
+            "student_fname":lesson_object.user.first_name,
+            "student_lname":lesson_object.user.last_name,
+            "teacher_fname":lesson_object.teacher.user.first_name,
+            "teacher_lname":lesson_object.teacher.user.last_name,
+        }
+
+        message = get_template('lessons/new_lesson_email.html').render(data)
+        title = "New Lesson Request"
+        send_mail(title, message, settings.EMAIL_HOST_USER, [lesson_object.teacher.user.email])
+        logging.info("EMAIL SENT?")
+
+        return reverse('lessons:student_lessons', kwargs={'pk': self.object.user.pk})
 
 class TeacherLessons(generic.ListView):
     model = Lesson
@@ -64,22 +82,10 @@ class TeacherLessons(generic.ListView):
         }
 
         message = get_template('lessons/lesson_confirmation_email.html').render(data)
-        title = "Lesson Approvement (DO NOT REPLY)"
+        title = "Lesson Approvement"
         send_mail(title, message, settings.EMAIL_HOST_USER, [lesson_object.user.email])
 
-        # # try:
-        # server = smtplib.SMTP("smtp.gmail.com", 587)
-        # server.ehlo()
-        # server.starttls()
-        # server.login(settings.EMAIL_HOST_USER, settings.EMAIL_HOST_PASSWORD)
-        # server.sendmail(settings.EMAIL_HOST_USER, [lesson_object.user.email], message)
-        # server.close()
-        # logging.info('successfully sent the mail')
-        # # except:
-        # #     logging.error("failed to send mail") 
-
         messages.add_message(request, messages.SUCCESS, f"You accepted the appointment of {lesson_object.user.first_name} {lesson_object.user.last_name}")
-
         return HttpResponseRedirect(request.path)
 
 class StudentLessons(generic.ListView):

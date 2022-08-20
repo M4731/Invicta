@@ -9,6 +9,7 @@
         {% comment %} <input type = "hidden" name = "teacher_id" value="{{teacher.pk}}"> {% endcomment %}
         {% csrf_token %}
         {% bootstrap_form form %}
+        <input hidden="true" name="lesson_id" value="{{lesson.id}}">
         <input type="submit" value="Create" class="btn btn-primary btn-large">
     </form>
 {% endblock %}

@@ -6,6 +6,16 @@
         <p>Lessons</p>
     </div>
 
+    {% if messages %}
+        <div class="card notification-card notification-invitation message_div">
+            <div class="card-body">
+                {% for message in messages %}
+                    <div class="card-title">{{message}} </div>
+                {% endfor %}
+            </div>
+        </div> 
+    {% endif %}
+
     <div class="col-md-8">
         {% for lesson in object_list  %}
             <div class="lessons_list_div">

@@ -48,8 +48,11 @@ class Teacher(models.Model):
         x = 0
         i = 0
         reviews = self.review_set.all()
-        for review in reviews:
-            x += review.rating
-            i += 1
-        return x/i
+        if len(reviews) != 0:
+            for review in reviews:
+                x += review.rating
+                i += 1
+            return x/i
+        else: 
+            return 0
  
