@@ -1,0 +1,11 @@
+<div class="lessons_list_div">
+    <p>Teacher Username: {{ lesson.teacher.user.username }}</p>
+    <p>Sent Date: {{ lesson.sent_date }}</p>
+    <p>Details: {{ lesson.description }}</p>
+    <p>Time Details: {{ lesson.time_description }}</p>
+
+    {% if lesson.accepted %}
+        <p>Planned Date: {{ lesson.planned_date }}</p>
+        <p>Planned Time: {{ lesson.planned_time }}</p>
+    {% endif %}
+</div>
