@@ -1,6 +1,31 @@
-{% extends "base.html" %}
-{% block content %}
+{% extends "base.html" %} 
 
-    <h1>Welcome to Star Social!</h1>
-   
+{% block extra_css %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'invicta/css/index.css' %}" >
+{% endblock %}
+
+{% block content %}
+    <div class="index-container">
+        <div class="index-text-container">
+            <h1 class="welcome-text">Welcome to Invicta!</h1>
+            <h2 class="welcome-desc">
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius est
+                eligendi, dignissimos quidem, expedita cumque ut reiciendis aliquid
+                temporibus maxime consequatur!
+            </h2>
+            {% if user.is_authenticated %}
+                <h1>AS</h1>
+            {% else %}
+                <div class="log-sign-index">
+                <a class="index-link index-login" href="{% url 'accounts:login' %}">Log In</a>
+                <a class="index-link index-login" href="{% url 'accounts:signup_student' %}">Sign up</a>
+                </div>
+                <div class="teacher-index">
+                    <h2 class="welcome-desc teacher-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt fugiat sed quibusdam ad ex recusandae! Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt fugiat sed quibusdam ad ex recusandae! Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt fugiat sed quibusdam ad ex recusandae!</h2>
+                    <a class="index-link teacher-login" href="{% url 'accounts:signup_teacher' %}">Become a teacher</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}

@@ -14,6 +14,15 @@
     {% comment %} Master CSS {% endcomment %}
     <link rel="stylesheet" type="text/css" href="{% static 'invicta/css/master.css' %}" >
 
+    {% comment %} Fonts {% endcomment %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+
+    {% block extra_css %}
+        
+    {% endblock %}
+
   </head>
 
   <body>
@@ -70,7 +79,7 @@
                     <a class="nav-link" href="{% url 'accounts:signup_student' %}">Student SignUp</a>
                 </li>
                 <li class="nav">
-                    <a class="nav-link" href="{% url 'accounts:signup_teacher' %}">Want to be a teacher?</a>
+                    <a class="nav-link" href="{% url 'accounts:signup_teacher' %}">Become a teacher!</a>
                 </li>
             {% endif %}
         </div>
