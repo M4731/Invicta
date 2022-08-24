@@ -64,6 +64,8 @@ class TeacherLessons(generic.ListView):
     def get_context_data(self,**kwargs):
         context = super().get_context_data(**kwargs)
         context['teacher'] = self.request.user.teacher
+        current_date  = datetime.datetime.now().date() + datetime.timedelta(days=2)
+        context['current_date'] = str(current_date)
         return context
 
     def post(self, request, pk):

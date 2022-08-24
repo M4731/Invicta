@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 {% load bootstrap5 %}
 
+{% block extra_css %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'invicta/css/contact.css' %}" >
+{% endblock %}
+
 {% block content %}
     <h4>Contact us!</h4>
     

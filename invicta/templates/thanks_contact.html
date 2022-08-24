@@ -1,4 +1,10 @@
 {% extends "base.html" %}
+
+{% block extra_css %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'invicta/css/thanks.css' %}" >
+{% endblock %}
+
 {% block content %}
     <h1>Thanks for contacting us!</h1>
     <h2>We will reach back to you as soon as we can.</h2>
