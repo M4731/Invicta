@@ -75,10 +75,21 @@ class TeacherReviews(generic.ListView):
 
     def get_queryset(self):
         queryset = super(TeacherReviews, self).get_queryset()
-        queryset = queryset.filter(teacher=self.request.user.teacher)
+        queryset = queryset.filter(teacher=Teacher.objects.get(pk=self.kwargs.get('pk')))
         return queryset
 
     def get_context_data(self,**kwargs):
         context = super().get_context_data(**kwargs)
-        context['teacher'] = self.request.user.teacher
+        context['teacher'] = Teacher.objects.get(pk=self.kwargs.get('pk'))
         return context
+
+    # OLD (ia review pentru profesor actual logat)
+    # def get_queryset(self):
+    #     queryset = super(TeacherReviews, self).get_queryset()
+    #     queryset = queryset.filter(teacher=self.request.user.teacher)
+    #     return queryset
+
+    # def get_context_data(self,**kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['teacher'] = self.request.user.teacher
+    #     return context

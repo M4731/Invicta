@@ -12,7 +12,7 @@
 
     {% if user.is_student %}
         <a class="btn btn-primary" href="{% url 'lessons:create_lesson' pk=profile.teacher.pk %}">BOOK A LESSON!</a>
-        <a class="btn btn-primary" href="{% url 'reviews:create_review' pk=profile.teacher.pk %}">LEAVE A REVIEW!</a>
+        <a class="btn btn-primary" href="{% url 'reviews:teacher_reviews' pk=profile.teacher.pk %}">REVIEWS</a>
     {% endif %}
 
     <div class="container">
@@ -20,7 +20,9 @@
         <p>rating: {{profile.teacher.get_teacher_rating}}</p>
         <br>
         <img src=" {{ profile.avatar.url }}">
+        <p>{{profile.teacher.price}}</p>
         <p> {{profile.teacher.subject}} teacher </p>
         <p>{{profile.description}}</p>
+        <a class="btn btn-primary" href="{% url 'reviews:create_review' pk=profile.teacher.pk %}">LEAVE A REVIEW!</a>
     </div>
 {% endblock content %}
