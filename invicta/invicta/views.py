@@ -5,6 +5,9 @@ import django_filters
 from django_filters.views import FilterView
 from invicta.forms import ContactForm
 from django.urls import reverse
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+
 
 class HomePage(TemplateView):
     template_name = 'index.html'
@@ -24,6 +27,7 @@ class TeacherFilter(django_filters.FilterSet):
         model = Teacher
         fields = ['subject']
 
+@method_decorator([login_required], name='dispatch')
 class ListTeachers(FilterView):
     model = Teacher
     template_name = 'all_teachers.html'

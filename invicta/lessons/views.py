@@ -12,7 +12,11 @@ from django.core.mail import EmailMessage, message, send_mail
 from django.conf import settings
 import smtplib
 import logging
+from invicta.decorators import student_required, teacher_required
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 
+@method_decorator([login_required, student_required], name='dispatch')
 class CreateLesson(LoginRequiredMixin, generic.CreateView):
     fields = ("description", "time_description")
     model = Lesson
@@ -46,6 +50,7 @@ class CreateLesson(LoginRequiredMixin, generic.CreateView):
 
         return reverse('lessons:student_lessons', kwargs={'pk': self.object.user.pk})
 
+@method_decorator([login_required, teacher_required], name='dispatch')
 class TeacherLessons(generic.ListView):
     model = Lesson
     template_name = 'lessons/teacher_lessons_list.html'
@@ -88,6 +93,7 @@ class TeacherLessons(generic.ListView):
         messages.add_message(request, messages.SUCCESS, f"You accepted the appointment of {lesson_object.user.first_name} {lesson_object.user.last_name}")
         return HttpResponseRedirect(request.path)
 
+@method_decorator([login_required, student_required], name='dispatch')
 class StudentLessons(generic.ListView):
     model = Lesson
     template_name = 'lessons/student_lessons_list.html'

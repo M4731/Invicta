@@ -8,7 +8,11 @@ import logging
 from invicta.decorators import student_required, teacher_required
 from django.urls import reverse_lazy, reverse
 from django.contrib import messages
+from invicta.decorators import student_required, teacher_required
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 
+@method_decorator([login_required, student_required], name='dispatch')
 class CreateReview(LoginRequiredMixin, generic.CreateView):
     fields = ("rating", "description")
     model = Review
@@ -30,6 +34,7 @@ class CreateReview(LoginRequiredMixin, generic.CreateView):
     def get_success_url(self, **kwargs):
         return reverse_lazy("reviews:student_reviews", kwargs={'pk': self.request.user.pk})
 
+@method_decorator([login_required, student_required], name='dispatch')
 class StudentReviews(generic.ListView):
     model = Review
     template_name = 'reviews/student_reviews_list.html'
@@ -45,6 +50,7 @@ class StudentReviews(generic.ListView):
         context['user'] = self.request.user
         return context
 
+@method_decorator([login_required, student_required], name='dispatch')
 class DeleteReview(LoginRequiredMixin, generic.DeleteView):
     model = Review
     template_name = "reviews/review_confirm_delete.html"
@@ -60,6 +66,7 @@ class DeleteReview(LoginRequiredMixin, generic.DeleteView):
     def get_success_url(self, **kwargs):
         return reverse_lazy("reviews:student_reviews", kwargs={'pk': self.request.user.pk})
 
+@method_decorator([login_required, student_required], name='dispatch')
 class UpdateReview(LoginRequiredMixin,generic.UpdateView):
     fields = ["rating","description"]
     model = Review
@@ -68,6 +75,7 @@ class UpdateReview(LoginRequiredMixin,generic.UpdateView):
     def get_success_url(self, **kwargs):
         return reverse_lazy("reviews:student_reviews", kwargs={'pk': self.request.user.pk})
 
+@method_decorator([login_required], name='dispatch')
 class TeacherReviews(generic.ListView):
     model = Review
     template_name = 'reviews/teacher_reviews_list.html'
