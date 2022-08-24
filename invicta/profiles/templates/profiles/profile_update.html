@@ -3,9 +3,13 @@
 
 {% block content %}
     <h1>TEACHER PROFILE UPDATE</h1>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Update">
-    </form>
+    {% if profile.teacher.user == user %}
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Update">
+        </form>
+    {% else %}
+        <p>You can't edit some else's profile.</p>
+    {% endif %}
 {% endblock content %}
