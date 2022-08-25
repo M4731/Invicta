@@ -110,3 +110,15 @@ class StudentLessons(generic.ListView):
         context = super().get_context_data(**kwargs)
         context['user'] = self.request.user
         return context
+
+@method_decorator([login_required, teacher_required], name='dispatch')
+class DeleteLesson(LoginRequiredMixin, generic.DeleteView):
+    model = Lesson
+    template_name = "lessons/lesson_confirm_delete.html"
+
+    def delete(self, *args, **kwargs):
+        messages.success(self.request, "Lesson Denied")
+        return super().delete(*args, **kwargs)
+    
+    def get_success_url(self, **kwargs):
+        return reverse_lazy("lessons:appending_lessons", kwargs={'pk': self.request.user.teacher.pk})

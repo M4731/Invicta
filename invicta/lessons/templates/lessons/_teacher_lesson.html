@@ -15,6 +15,7 @@
                     placeholder="18:00" value="">
                 <input hidden="true" name="lesson_id" value="{{lesson.id}}">
                 <input class="btn-block btn-primary form-control" type="submit" value="Accept">
+                <a class="btn btn-danger" href="{% url 'lessons:delete_lesson' pk=lesson.pk %}">Deny</a>
             </div>
         </form>
     {% endif %}

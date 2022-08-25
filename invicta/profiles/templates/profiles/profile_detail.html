@@ -23,6 +23,8 @@
         <p>{{profile.teacher.price}}</p>
         <p> {{profile.teacher.subject}} teacher </p>
         <p>{{profile.description}}</p>
-        <a class="btn btn-primary" href="{% url 'reviews:create_review' pk=profile.teacher.pk %}">LEAVE A REVIEW!</a>
+        {% if user.is_student %}
+            <a class="btn btn-primary" href="{% url 'reviews:create_review' pk=profile.teacher.pk %}">LEAVE A REVIEW!</a>
+        {% endif %}
     </div>
 {% endblock content %}
