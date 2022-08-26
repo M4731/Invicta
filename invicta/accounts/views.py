@@ -20,7 +20,7 @@ class TeacherSignUpView(CreateView):
     success_url = reverse_lazy('login')
     template_name = 'accounts/signup.html'
 
-@method_decorator([login_required], name='dispatch')
+@method_decorator([login_required, student_required], name='dispatch')
 class UserUpdateView(UpdateView):
     model = User
     fields = ['username','first_name','last_name','email','phone_number']
