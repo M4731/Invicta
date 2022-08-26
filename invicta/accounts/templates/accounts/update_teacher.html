@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+
+{% block content %}
+    <div class="container">
+        {% if user_id == user.pk %}
+            <h1>Update Account Details</h1>
+            <form method="POST">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                <input type="submit" class="btn btn-danger" value="Update">
+                <a href="{% url 'accounts:update_teacher_info' pk=user.teacher.pk %}">Update Subject and Pricing</a>
+            </form>
+        {% else %}
+            <p>This is not your account!</p>
+        {% endif %}
+    </div>
+{% endblock %}

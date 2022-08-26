@@ -9,4 +9,7 @@ urlpatterns = [
     path('logout/',LogoutView.as_view(),name='logout'),
     path('signup/student',views.StudentSignUpView.as_view(),name='signup_student'),
     path('signup/teacher',views.TeacherSignUpView.as_view(),name='signup_teacher'),
+    path('update/student/<int:pk>',views.UserUpdateView.as_view(),name='update_user'),
+    path('update/teacher/<int:pk>',views.TeacherUpdateView.as_view(),name='update_teacher'),
+    path('update/teacher-info/<int:pk>',views.TeacherInfoUpdateView.as_view(),name='update_teacher_info'),
 ]

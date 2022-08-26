@@ -52,7 +52,7 @@
                         </li> 
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'reviews:teacher_reviews' pk=user.teacher.pk %}">My Reviews</a>
-                        </li> 
+                        </li>
                     {% endif %}
                     {% if user.is_student %}
                         <li class="nav-item">
@@ -68,6 +68,16 @@
                 {% endif %}
             </ul>   
             {% if user.is_authenticated %}
+                {% if user.is_teacher %} 
+                    <li class="nav">
+                        <a class="nav-link" href="{% url 'accounts:update_teacher' pk=user.pk %}">Update Accounta Data</a>
+                    </li> 
+                {% endif %}
+                {% if user.is_student %}
+                    <li class="nav">
+                        <a class="nav-link" href="{% url 'accounts:update_user' pk=user.pk %}">Update Accounta Data</a>
+                    </li> 
+                {% endif %}
                 <li class="nav">
                     <a class="nav-link" href="{% url 'accounts:logout' %}">Log Out</a>
                 </li> 

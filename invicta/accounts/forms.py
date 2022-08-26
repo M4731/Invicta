@@ -26,7 +26,6 @@ class TeacherSignUpForm(UserCreationForm):
     subject = forms.ModelChoiceField(
         queryset=Subject.objects.all()
     )
-
     price = forms.IntegerField()
 
     class Meta(UserCreationForm.Meta):
