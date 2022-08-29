@@ -8,7 +8,7 @@ from accounts.models import Teacher
 from django.http.response import HttpResponseRedirect
 import datetime
 from django.template.loader import render_to_string, get_template
-from django.core.mail import EmailMessage, message, send_mail
+from django.core.mail import send_mail
 from django.conf import settings
 import smtplib
 import logging
@@ -46,8 +46,7 @@ class CreateLesson(LoginRequiredMixin, generic.CreateView):
         message = get_template('lessons/new_lesson_email.html').render(data)
         title = "New Lesson Request"
         send_mail(title, message, settings.EMAIL_HOST_USER, [lesson_object.teacher.user.email])
-        logging.info("EMAIL SENT?")
-
+    
         return reverse('lessons:student_lessons', kwargs={'pk': self.object.user.pk})
 
 @method_decorator([login_required, teacher_required], name='dispatch')

@@ -154,10 +154,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #EMAIL CONFIGURATION
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = os.environ.get('EMAIL_MAIL')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD')
-EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' #backend email
+EMAIL_HOST = 'smtp.gmail.com' #host gmail
+EMAIL_PORT = 587 #port conectere gmail
+EMAIL_HOST_USER = os.environ.get('EMAIL_MAIL') #adresa de email folosita
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD') #aparola adresei de email folosita
+EMAIL_USE_TLS = True #securitate gmail
+EMAIL_USE_SSL = False #securitate gmail

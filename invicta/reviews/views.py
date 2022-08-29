@@ -21,9 +21,6 @@ class CreateReview(LoginRequiredMixin, generic.CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         form.instance.teacher = Teacher.objects.get(pk=self.kwargs.get('pk'))
-
-        # if len(Review.objects.all(user=self.request.user, teacher=Teacher.objects.get(pk=self.kwargs.get('pk')))) != 0:
-        #     return reverse('reviews:student_reviews', kwargs=self.request.user.pk)
         return super(CreateReview, self).form_valid(form)
     
     def get_context_data(self, **kwargs):
@@ -90,14 +87,3 @@ class TeacherReviews(generic.ListView):
         context = super().get_context_data(**kwargs)
         context['teacher'] = Teacher.objects.get(pk=self.kwargs.get('pk'))
         return context
-
-    # OLD (ia review pentru profesor actual logat)
-    # def get_queryset(self):
-    #     queryset = super(TeacherReviews, self).get_queryset()
-    #     queryset = queryset.filter(teacher=self.request.user.teacher)
-    #     return queryset
-
-    # def get_context_data(self,**kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['teacher'] = self.request.user.teacher
-    #     return context
