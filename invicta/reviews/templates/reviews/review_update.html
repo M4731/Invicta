@@ -2,7 +2,7 @@
 {% load bootstrap5 %}
 
 {% block content %}
-    <h4>Update Review for @{{review.teacher.user.username}}</h4>
+    <h4>Update Review for {{review.teacher.user.first_name}} {{review.teacher.user.last_name}}</h4>
     
     <form method="POST" action="{% url 'reviews:update_review' pk=review.pk %}" id="review_form">
         {% csrf_token %}

@@ -1,6 +1,20 @@
+{% load bootstrap_icons %}
+
 <div class="review_list_div">
-    <p>Student Username: {{ review.user.username }}</p>
-    <p>Sent Date: {{ review.sent_date }}</p>
-    <p>Details: {{ review.description }}</p>
-    <p>Rating: {{ review.rating }}</p>
+    <p>
+        {% bs_icon 'person' size='30px' extra_classes="bootstrap_icons" %}
+        {{ review.user.first_name }} {{ review.user.last_name }}</p>
+    </p>
+    <p>
+        Sent at: {{ review.sent_date }} 
+        {% bs_icon 'calendar-date' size='30px' extra_classes="bootstrap_icons" %}
+    </p>
+    <p>
+        Details: {{ review.description }}
+        {% bs_icon 'chat-left-dots' size='30px' extra_classes="bootstrap_icons" %}
+    </p>
+    <p>
+        Rating: {{ review.rating }}
+        {% bs_icon 'star-fill' size='30px' extra_classes="bootstrap_icons" %}
+    </p>
 </div>

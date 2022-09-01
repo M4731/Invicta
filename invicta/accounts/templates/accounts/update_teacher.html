@@ -8,7 +8,7 @@
             <form method="POST">
                 {% csrf_token %}
                 {% bootstrap_form form %}
-                <input type="submit" class="btn btn-danger" value="Update">
+                <input type="submit" class="btn btn-primary" value="Update">
                 <a href="{% url 'accounts:update_teacher_info' pk=user.teacher.pk %}">Update Subject and Pricing</a>
             </form>
         {% else %}

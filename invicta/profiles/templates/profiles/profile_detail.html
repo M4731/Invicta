@@ -1,30 +1,80 @@
 {% extends "base.html" %}
 {% load static %}
+{% load bootstrap_icons %}
+
+{% block extra_css %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'invicta/css/teacher_profile.css' %}" >
+{% endblock %}
+
 
 {% block content %}
-    <h1>TEACHER PROFILE</h1>
+    <h1>{{profile.teacher.user.first_name}} {{profile.teacher.user.last_name}}</h1>
+    <h2>Rating: {{profile.teacher.get_teacher_rating}} 
+        {% bs_icon 'star-fill' size='30px' extra_classes="bootstrap_icons" %}
+    </h2>
+    <h2>Price: {{profile.teacher.price}} lei
+        {% bs_icon 'cash-coin' size='30px' extra_classes="bootstrap_icons" %}
+    </h2>
+    <div class="teacher-big-wrapper">
+        <div class="teacher-card">
+            <div class="teacher-photo-wrapper">
+                <img src=" {{ profile.avatar.url }}" class="teacher-photo">
+            </div>
+            <div class="teacher-info-wrapper">
+                <h2>A brief description:</h2>
+                <p>{{profile.description}}</p>
+            </div>
+        </div>
+        <div class="teacher-additional-info">
+            <div class="teacher-subject">
+                {% if profile.teacher.subject.name == "Mathematics" %}
+                    {% bs_icon 'calculator' size='20px' %}
+                    <p>
+                        {{profile.teacher.subject}}
+                    </p>
+                {% elif profile.teacher.subject.name == "English" or profile.teacher.subject.name == "Romanian" %}
+                    {% bs_icon 'book' size='20px' %}
+                    <p>
+                        {{profile.teacher.subject}}
+                    </p>
+                {% else %}
+                    {% bs_icon 'award' size='20px' %}
+                    <p>
+                        {{profile.teacher.subject}}
+                    </p>
+                {% endif %}
+            </div>
+            <div class="teacher-phone">
+                {% bs_icon 'telephone-fill' size='20px' %}
+                <p>
+                    {{profile.teacher.user.phone_number}}
+                </p>
+            </div>
+            <div class="teacher-email">
+                {% bs_icon 'envelope' size='20px' %}
+                <p>
+                    {{profile.teacher.user.email}}
+                </p>
+            </div>
+        </div>
+    </div>
 
-    {% if user.is_teacher %}
+    <div class="teacher-button-wrapper">
+        {% if user.is_teacher %}
         {% if profile.teacher.user == user %}
+
             <a class="btn btn-primary" href="{% url 'profiles:profile_update' slug=profile.slug %}">UPDATE YOUR PROFILE</a>
         {% endif %}
-    {% endif %}
+        {% endif %}
 
-    {% if user.is_student %}
-        <a class="btn btn-primary" href="{% url 'lessons:create_lesson' pk=profile.teacher.pk %}">BOOK A LESSON!</a>
-        <a class="btn btn-primary" href="{% url 'reviews:teacher_reviews' pk=profile.teacher.pk %}">REVIEWS</a>
-    {% endif %}
-
-    <div class="container">
-        <h1>{{profile.teacher.user.first_name}} {{profile.teacher.user.last_name}}</h1>
-        <p>rating: {{profile.teacher.get_teacher_rating}}</p>
-        <br>
-        <img src=" {{ profile.avatar.url }}">
-        <p>{{profile.teacher.price}}</p>
-        <p> {{profile.teacher.subject}} teacher </p>
-        <p>{{profile.description}}</p>
+        {% if user.is_student %}
+            <a class="btn btn-primary" href="{% url 'lessons:create_lesson' pk=profile.teacher.pk %}">BOOK A LESSON!</a>
+            <a class="btn btn-primary" href="{% url 'reviews:teacher_reviews' pk=profile.teacher.pk %}">REVIEWS</a>
+        {% endif %}
         {% if user.is_student %}
             <a class="btn btn-primary" href="{% url 'reviews:create_review' pk=profile.teacher.pk %}">LEAVE A REVIEW!</a>
         {% endif %}
     </div>
+
 {% endblock content %}

@@ -1,20 +1,40 @@
 {% extends "base.html" %}
+{% load bootstrap_icons %}
+
+{% block extra_css %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'invicta/css/lessons_and_reviews.css' %}" >
+{% endblock %}
 
 {% block content %}
     {% if lesson.teacher.id == user.teacher.id %}
         <h3>Are you sure you want to deny this lesson?</h3>
 
         <div class="review_list_div">
-            <p>Student: {{ lesson.user.username }}</p>
-            <p>Sent Date: {{ lesson.sent_date }}</p>
-            <p>Details: {{ lesson.description }}</p>
-            <p>Time Details: {{ lesson.time_description }}</p>
+            <p class="lesson_title student-name-title">
+                {% bs_icon 'person' size='30px' extra_classes="bootstrap_icons" %}
+                {{ lesson.user.first_name }} {{ lesson.user.last_name }}</p>
+            </p>
+            <p>
+                Sent at: {{ lesson.sent_date }} 
+                {% bs_icon 'calendar-date' size='30px' extra_classes="bootstrap_icons" %}
+            </p>
+            <p>
+                Details: {{ lesson.description }}
+                {% bs_icon 'chat-left-dots' size='30px' extra_classes="bootstrap_icons" %}
+            </p>
+            <p>
+                Time Details: {{ lesson.time_description }}
+                {% bs_icon 'clock' size='30px' extra_classes="bootstrap_icons" %}
+            </p>
         </div>
+
+        <p>You can not get the lesson back if you confirm!</p>
 
         <form method="POST">
             {% csrf_token %}
             <input type="submit" value="Confirm Deny" class="btn btn-danger btn-large">
-            <a href="{% url 'lessons:appending_lessons' pk=user.teacher.pk %}" class="btn btn-simple btn-large btn-default">Cancel</a>
+            <a class="btn btn-warning" href="{% url 'lessons:appending_lessons' pk=user.teacher.pk %}">Cancel</a>
         </form>
     {% else %}
         <p>You can't deny some one else's lesson.</p>

@@ -52,7 +52,7 @@ class Teacher(models.Model):
             for review in reviews:
                 x += review.rating
                 i += 1
-            return x/i
+            return round(x/i,2)
         else: 
             return 0
  

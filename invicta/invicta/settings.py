@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bootstrap5',
     'django_filters',
+    'sortable_listview',
+    'django_bootstrap_icons',
     'accounts',
     'profiles',
     'lessons',

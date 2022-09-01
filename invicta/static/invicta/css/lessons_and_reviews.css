@@ -1,0 +1,90 @@
+.lessons_list_div {
+    border : 1px solid #6C757D;
+    margin-bottom: 2em;
+    text-align: center;
+    padding-top: 1em;
+}
+
+.lesson_info {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.lesson_title {
+    margin-bottom: 1em;
+}
+
+a.lessons-a {
+    color: white;
+    text-decoration: none;
+    margin-left: 1.25em;
+    margin-right: 1.25em;
+}
+
+.lesson_title>span {
+  font-size: 0.5em;
+}
+
+.student_lesson_left_side>p {
+    text-align: center;
+    align-items: center;
+}
+
+.student_lesson_left_side {
+    width: 50%;
+    align-items: center;
+    text-align: center;
+}
+
+.student_lesson_rightside {
+    width: 50%;
+    align-items: center;
+    text-align: center;
+}
+
+.list-title{
+    margin: 1em 1em 2em 1em;
+}
+
+.list-paragraph{
+    font-size: 1em;
+    margin-left: 1em;
+}
+
+.lesson_hr {
+    background-color: #6C757D;
+    width: 90%;
+}
+
+.review_list_div {
+    border : 1px solid #6C757D;
+    margin-bottom: 2em;
+    text-align: center;
+    padding-top: 1em;
+}
+
+a.review-a {
+    margin-bottom: 1em;
+    display: block;
+}
+
+.delete_edit_review_div {
+    margin-bottom: 1em;
+}
+
+.form-answers {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: row;
+}
+
+.form-answers>button, .form-answers>a {
+    width: 33%;
+    justify-content: center;
+}
+
+.student-name-title {
+    font-size: 1.25em;
+}

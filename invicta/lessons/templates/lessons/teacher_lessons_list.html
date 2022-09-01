@@ -1,10 +1,14 @@
 {% extends "base.html" %}
 
+{% block extra_css %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'invicta/css/lessons_and_reviews.css' %}" >
+{% endblock %}
+
 {% block content %}
-    <div class="col-md-4">
-        <h1>@{{ teacher.user.username }}</h1>
-        <p>Lessons</p>
-    </div>
+    <h4 class="list-title">Hello, {{user.first_name}} {{user.last_name}}!</h4>
+
+    <p class="list-paragraph">These are your lessons:</p>
 
     {% if messages %}
         <div class="card notification-card notification-invitation message_div">

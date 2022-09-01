@@ -25,6 +25,7 @@ class ListTeachers(FilterView):
     model = Teacher
     template_name = 'all_teachers.html'
     filterset_class = TeacherFilter
+    paginate_by = 5
 
 class ContactFormView(generic.FormView):
     template_name = 'contact_page.html'

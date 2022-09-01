@@ -1,22 +1,58 @@
-<div class="lessons_list_div">
-    <p>Student Username: {{ lesson.user.username }}</p>
-    <p>Sent Date: {{ lesson.sent_date }}</p>
-    <p>Details: {{ lesson.description }}</p>
-    <p>Time Details: {{ lesson.time_description }}</p>
+{% load bootstrap_icons %}
 
-    {% if lesson.accepted == False %}
-        <form method="POST" action="{% url 'lessons:appending_lessons' pk=teacher.pk %}">
-            {% csrf_token %}
-            <div class="form-group">
-                <input type="date" name="date" class="form-control mb-2" 
-                    placeholder="dd-mm-yyyy" value=""
-                    min={{current_date}} max="2030-12-31">
-                <input type="text" name="time" class="form-control mb-2" 
-                    placeholder="18:00" value="">
-                <input hidden="true" name="lesson_id" value="{{lesson.id}}">
-                <input class="btn-block btn-primary form-control" type="submit" value="Accept">
-                <a class="btn btn-danger" href="{% url 'lessons:delete_lesson' pk=lesson.pk %}">Deny</a>
-            </div>
-        </form>
-    {% endif %}
+<div class="lessons_list_div">
+    <h3 class="lesson_title student-name-title">
+        {% bs_icon 'person' size='30px' extra_classes="bootstrap_icons" %}
+        {{ lesson.user.first_name }} {{ lesson.user.last_name }}</p>
+    </h3>
+    <hr class="lesson_hr">
+    <div class="lesson_info">
+        <div class="student_lesson_left_side">
+            <p>
+                Sent at: {{ lesson.sent_date }} 
+                {% bs_icon 'calendar-date' size='30px' extra_classes="bootstrap_icons" %}
+            </p>
+            <p>
+                Details: {{ lesson.description }}
+                {% bs_icon 'chat-left-dots' size='30px' extra_classes="bootstrap_icons" %}
+            </p>
+            <p>
+                Time Details: {{ lesson.time_description }}
+                {% bs_icon 'clock' size='30px' extra_classes="bootstrap_icons" %}
+            </p>
+        </div>
+        <div class="student_lesson_right_side">
+            {% if lesson.accepted %}
+                <p>
+                    {{ lesson.planned_date }}
+                    {% bs_icon 'calendar-check' size='30px' extra_classes="bootstrap_icons" %}
+                </p>
+                <p>
+                    {{ lesson.planned_time }}
+                    {% bs_icon 'clock-history' size='30px' extra_classes="bootstrap_icons" %}
+                </p>
+            {% else %}
+                <form method="POST" action="{% url 'lessons:appending_lessons' pk=teacher.pk %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="date" name="date" class="form-control mb-2" 
+                            placeholder="dd-mm-yyyy" value=""
+                            min={{current_date}} max="2030-12-31">
+                        <input type="text" name="time" class="form-control mb-2" 
+                            placeholder="18:00" value="">
+                        <input hidden="true" name="lesson_id" value="{{lesson.id}}">
+                        <div class="form-answers">
+                            <button class="btn-primary form-control" type="submit">
+                                {% bs_icon 'check-circle' size='35px' extra_classes="bootstrap_icons" %}
+                            </button>
+                            <a class="btn btn-danger form-control" href="{% url 'lessons:delete_lesson' pk=lesson.pk %}">
+                                {% bs_icon 'x-circle' size='35px' extra_classes="bootstrap_icons" %}
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+
 </div>

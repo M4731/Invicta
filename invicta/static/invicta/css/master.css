@@ -1,9 +1,3 @@
-.lessons_list_div{
-  border : 1px solid black;
-  margin-bottom: 2em;
-  text-align: center;
-}
-
 .review_list_div{
   border : 1px solid black;
   margin-bottom: 2em;
@@ -27,4 +21,19 @@
 body {
   background-color: #212529;
   color: #E9ECEF;
+}
+
+.bootstrap_icons {
+  padding-bottom: 7.5px;
+}
+
+.bootstrap_icons_2 {
+  padding-bottom:2.5px;
+}
+
+.basic_button {
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+  border-radius: 5px;
 }

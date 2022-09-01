@@ -8,7 +8,7 @@
             <form method="POST">
                 {% csrf_token %}
                 {% bootstrap_form form %}
-                <input type="submit" class="btn btn-danger" value="Update">
+                <input type="submit" class="btn btn-primary" value="Update">
             </form>
         {% else %}
             <p>This is not your account!</p>

@@ -1,22 +1,40 @@
 {% extends "base.html" %}
+{% load bootstrap_icons %}
+
+{% block extra_css %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'invicta/css/all_teachers.css' %}" >
+{% endblock %}
 
 {% block content %}
-    <div class="col-md-8">
-        <div class="list-teacher">
-            
-            <form action="" method="get">
-                {{ filter.form.as_p }}
-                <input type="submit" />
-            </form>
+    <h1 class="all-teachers-title">Website Teachers</h1>
 
-            {% for teacher in object_list %}
-                <a class="list-teacher-item" href="{% url 'profiles:profile_detail' slug=teacher.profile.slug %}">
-                    <h3 class="title list-group-item-heading">{{ teacher.user.first_name }} {{ teacher.user.last_name }}</h3>
-                    <div class="list-group-item-text container-fluid">
-                        {{ teacher.subject }}
-                    </div>
-                </a>
-            {% endfor %}
-        </div>
-    </div>
+    <form action="" method="get" class="all-teachers-filter">
+        {{ filter.form.as_p }}
+        <input type="submit" />
+    </form>
+    {% for teacher in object_list %}
+        <a class="all-teachers-a" href="{% url 'profiles:profile_detail' slug=teacher.profile.slug %}">
+            <div class="all-teachers-card">
+                <div class="all-teachers-image-wrapper">
+                    <img src="{{teacher.profile.avatar.url}}" class="all-teachers-image"/>
+                </div>
+                <div class="all-teachers-details1">
+                    <h2 class="all-teachers-name">{{teacher.user.first_name}} {{teacher.user.last_name}}</h2>
+                    <span class="all-teachers-subject">{{teacher.subject}} teacher</span>
+                </div>
+                <div class="all-teachers-details2">
+                    <h2 class="all-teachers-rating">{{teacher.get_teacher_rating}}
+                        {% bs_icon 'star-fill' size='30px' extra_classes="bootstrap_icons" %}
+                    </h2>
+                    <span class="all-teachers-price">{{teacher.price}}
+                        {% bs_icon 'currency-exchange' size='20px' extra_classes="bootstrap_icons_2" %}
+                    </span>
+                </div>
+            </div>
+        </a>
+    {% endfor %}
+
+    {% include "_pagination.html" %}
+
 {% endblock %}

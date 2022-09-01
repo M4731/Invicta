@@ -1,11 +1,46 @@
-<div class="lessons_list_div">
-    <p>Teacher Username: {{ lesson.teacher.user.username }}</p>
-    <p>Sent Date: {{ lesson.sent_date }}</p>
-    <p>Details: {{ lesson.description }}</p>
-    <p>Time Details: {{ lesson.time_description }}</p>
+{% load bootstrap_icons %}
 
-    {% if lesson.accepted %}
-        <p>Planned Date: {{ lesson.planned_date }}</p>
-        <p>Planned Time: {{ lesson.planned_time }}</p>
-    {% endif %}
+<div class="lessons_list_div">
+    <h3 class="lesson_title">
+        <span> {{lesson.teacher.subject}} </span>
+        <a class="lessons-a" href="{% url 'profiles:profile_detail' slug=lesson.teacher.profile.slug %}">
+            {% bs_icon 'mortarboard-fill' size='30px' extra_classes="bootstrap_icons" %}
+            {{ lesson.teacher.user.first_name }} {{ lesson.teacher.user.last_name }}
+        </a>
+        <span> 
+            {{lesson.teacher.price}} 
+            {% bs_icon 'currency-exchange' size='20px' extra_classes="bootstrap_icons_2" %}
+        </span>
+    </h3>
+    <hr class="lesson_hr">
+    <div class="lesson_info">
+        <div class="student_lesson_left_side">
+            <p>
+                Sent at: {{ lesson.sent_date }} 
+                {% bs_icon 'calendar-date' size='30px' extra_classes="bootstrap_icons" %}
+            </p>
+            <p>
+                Details: {{ lesson.description }}
+                {% bs_icon 'chat-left-dots' size='30px' extra_classes="bootstrap_icons" %}
+            </p>
+            <p>
+                Time Details: {{ lesson.time_description }}
+                {% bs_icon 'clock' size='30px' extra_classes="bootstrap_icons" %}
+            </p>
+        </div>
+        <div class="student_lesson_right_side">
+            {% if lesson.accepted %}
+                <p>
+                    {{ lesson.planned_date }}
+                    {% bs_icon 'calendar-check' size='30px' extra_classes="bootstrap_icons" %}
+                </p>
+                <p>
+                    {{ lesson.planned_time }}
+                    {% bs_icon 'clock-history' size='30px' extra_classes="bootstrap_icons" %}
+                </p>
+            {% else %}
+                <p>Lesson not yet accepted.</p>
+            {% endif %}
+        </div>
+    </div>
 </div>
