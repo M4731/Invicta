@@ -25,7 +25,7 @@ AUTH_USER_MODEL = 'accounts.User'
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY','django-insecure-6pnz(9$dwse+*_$8zjqn540+^w@$@qhcsyp@b$s@6m0um@1%@u')
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = str(os.environ.get('DEBUG')) == "1"
