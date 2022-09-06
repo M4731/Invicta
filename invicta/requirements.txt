@@ -1,12 +1,9 @@
 argon2-cffi==21.3.0
 argon2-cffi-bindings==21.2.0
-asgiref @ file:///tmp/build/80754af9/asgiref_1625643473416/work
 bcrypt==3.2.2
 beautifulsoup4==4.11.1
-certifi @ file:///C:/Windows/TEMP/abs_e9b7158a-aa56-4a5b-87b6-c00d295b01fanefpc8_o/croots/recipe/certifi_1655968940823/work/certifi
 cffi==1.15.1
 charset-normalizer==2.1.1
-Django @ file:///tmp/build/80754af9/django_1625585912945/work
 django-bootstrap-icons==0.8.1
 django-bootstrap-v5==1.0.11
 django-cors-headers==3.13.0
@@ -18,13 +15,9 @@ django-sortable-listview==0.43
 django-user-sessions==1.7.1
 idna==3.3
 Pillow==9.2.0
-psycopg2 @ file:///C:/ci_310/psycopg2_1642085998310/work
 pycparser==2.21
-pytz @ file:///C:/Windows/TEMP/abs_90eacd4e-8eff-491e-b26e-f707eba2cbe1ujvbhqz1/croots/recipe/pytz_1654762631027/work
 requests==2.28.1
 six==1.16.0
 soupsieve==2.3.2.post1
-sqlparse @ file:///tmp/build/80754af9/sqlparse_1602184451250/work
-typing_extensions @ file:///C:/Windows/TEMP/abs_dd2d0moa85/croots/recipe/typing_extensions_1659638831135/work
 urllib3==1.26.12
 wincertstore==0.2
