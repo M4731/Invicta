@@ -10,9 +10,7 @@
     <div class="index-text-container">
         <h1 class="welcome-text">Welcome to Invicta!</h1>
         <h2 class="welcome-desc">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius est
-            eligendi, dignissimos quidem, expedita cumque ut reiciendis aliquid
-            temporibus maxime consequatur!
+            The gates of the Invicta world are from now on wide open to all! We, the creators of this realm, invite you with great enthusiasm to cross its threshold! If you are a pupil or a student, eager to deepen or to pursue the way of performance, we give you the chance to find a teacher or a professor to guide your steps.
         </h2>
         {% if user.is_authenticated %}
             <h2 class="welcome-desc">Welcome {{ user.username }}!</h2>
@@ -22,7 +20,7 @@
                 <a class="index-link index-login" href="{% url 'accounts:signup_student' %}">Sign up</a>
             </div>
             <div class="teacher-index">
-                <h2 class="welcome-desc teacher-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt fugiat sed quibusdam ad ex recusandae! Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt fugiat sed quibusdam ad ex recusandae! Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt fugiat sed quibusdam ad ex recusandae!</h2>
+                <h2 class="welcome-desc teacher-desc">This is the virtual place where all the hearty and talented teachers and professors are welcome. Dear teachers,if you love children and young people, if you are in love and passioately involved in the job you have chosen, come and lay a brick in the foundation of a career! It is an opportunity for you to prove your mastery and also to supplement your income from public education.</h2>
                 <a class="index-link teacher-login" href="{% url 'accounts:signup_teacher' %}">Become a teacher</a>
             </div>
         {% endif %}
