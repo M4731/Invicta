@@ -13,7 +13,7 @@
             The gates of the Invicta world are from now on wide open to all! We, the creators of this realm, invite you with great enthusiasm to cross its threshold! If you are a pupil or a student, eager to deepen or to pursue the way of performance, we give you the chance to find a teacher or a professor to guide your steps.
         </h2>
         {% if user.is_authenticated %}
-            <h2 class="welcome-desc">Welcome {{ user.first_name }} {{ user.last_name }}!</h2>
+            <h2 class="welcome-desc">Welcome {{ user.username }}!</h2>
         {% else %}
             <div class="log-sign-index">
                 <a class="index-link index-login" href="{% url 'accounts:login' %}">Log In</a>
