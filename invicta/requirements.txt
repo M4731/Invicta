@@ -1,23 +1,23 @@
-argon2-cffi==21.3.0
-argon2-cffi-bindings==21.2.0
-bcrypt==3.2.2
-beautifulsoup4==4.11.1
-cffi==1.15.1
-charset-normalizer==2.1.1
-django-bootstrap-icons==0.8.1
-django-bootstrap-v5==1.0.11
-django-cors-headers==3.13.0
-django-dotenv==1.4.2
-django-environ==0.9.0
-django-filter==22.1
-django-multiselectfield==0.1.12
-django-sortable-listview==0.43
-django-user-sessions==1.7.1
-idna==3.3
-Pillow==9.2.0
-pycparser==2.21
-requests==2.28.1
-six==1.16.0
-soupsieve==2.3.2.post1
-urllib3==1.26.12
-wincertstore==0.2
+# Direct application dependencies for Python 3.14.
+# Initial pins: installation and application startup still need verification.
+# Transitive dependencies are resolved by pip; this is not a complete lock file.
+
+# Web framework (5.2 LTS).
+Django==5.2.18
+
+# Teacher directory filtering.
+django-filter==26.2
+
+# Bootstrap form rendering and template icons.
+django-bootstrap5==26.4
+django-bootstrap-icons==0.9.0
+
+# Local environment configuration.
+python-dotenv==1.2.4
+
+# Profile image support.
+Pillow==13.0.0
+
+# Password hashers configured in settings.py.
+argon2-cffi==25.1.0
+bcrypt==5.0.0

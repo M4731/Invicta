@@ -1,0 +1,8 @@
+# Local Python virtual environment.
+.venv/
+
+# Private local configuration.
+.env
+
+# Local database backups.
+/backups/
