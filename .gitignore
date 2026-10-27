@@ -4,5 +4,9 @@
 # Private local configuration.
 .env
 
+# Generated Python files (already tracked files are unaffected).
+__pycache__/
+*.py[cod]
+
 # Local database backups.
 /backups/

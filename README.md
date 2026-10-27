@@ -41,42 +41,31 @@ The custom `User` extends Django's `AbstractUser`. A `Teacher` belongs to one us
 
 ## Local development setup
 
-### Current prerequisites
+### Windows quick start
 
-The original source references Django 3.2.5, and committed bytecode was generated with Python 3.10. These are historical clues, not a verified compatibility matrix. The dependency file contains packages pinned in 2022 and **does not explicitly list Django**. Dependency restoration and version alignment are required before a reproducible installation can be claimed.
+Install Python **3.14** with the `py` launcher or `python` available in PATH, then clone this repository. Internet access is required to download dependencies.
 
-Use an isolated environment. The following PowerShell steps outline the original setup; they have not yet been verified end to end:
+1. Double-click `setup.bat` in the repository root. It runs `setup.ps1`, creates `.venv` if needed, checks Python 3.14, installs `invicta/requirements.txt`, prepares `invicta/.env`, and runs Django's configuration check. The window stays open so errors can be read.
+2. Open `invicta/.env` in a text editor and fill in `EMAIL_MAIL` (the Gmail test account) and `EMAIL_PASSWORD` (its Google app password). These are needed for contact and lesson emails, not for the home page.
+3. Double-click `run.bat`, wait for the server to start, and open http://127.0.0.1:8000/ in your browser. Keep the console open; stop the server with Ctrl+C.
 
-```powershell
-cd invicta
-py -3.10 -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-python -m pip install -r requirements.txt
-```
+No virtual environment activation or typed startup commands are needed. From PowerShell, setup can also be run with `.\setup.ps1`.
 
-Install a Django version compatible with the restored dependencies before proceeding. The original framework version should be used only to investigate the historical application in isolation; the portfolio refresh should establish and verify an updated dependency set.
+Setup preserves an existing `.venv` and `.env`; an environment with a different Python version is reported rather than deleted. Re-running setup installs the declared dependencies again. Failures stop setup and display an error; fix the reported problem and rerun it.
 
 ### Environment variables
 
-Create `invicta/.env`, next to `manage.py`, with your own values:
+`invicta/.env.example` is the shared template with empty credentials. On first setup, the script creates `invicta/.env` from it and fills `SECRET_KEY` with a cryptographically random value. `DEBUG=1` enables local development mode. An existing `.env` is never overwritten, even if incomplete; edit it manually when needed.
 
-```dotenv
-SECRET_KEY=replace-with-a-random-local-development-secret
-DEBUG=1
-EMAIL_MAIL=your-smtp-mailbox
-EMAIL_PASSWORD=your-smtp-credential
-```
+The private `.env` and `.venv` are excluded from Git. Each new computer builds its own environment and secret key; transfer email credentials separately or use another test account. Never commit actual passwords to `.env.example`.
 
-`manage.py` loads this file through `django-dotenv`. WSGI and ASGI entry points do not load it themselves, so those processes need environment variables supplied separately.
-
-The current email settings use Gmail SMTP on port 587 with TLS. Request creation, lesson acceptance, and the contact form send real email when configured. For a local demonstration, configure Django's console email backend before exercising these flows if you want to inspect messages locally.
+Django settings load `invicta/.env` through `python-dotenv`. Existing process environment variables take precedence. Email uses Gmail SMTP on port 587 with TLS and sends real messages when configured. Restart the server after changing `.env`.
 
 ### Database and server
 
 For a clean setup, preserve the supplied `db.sqlite3` outside the working copy before replacing it with a new database. The repository currently includes an existing populated database; do not assume its records are suitable public demo data.
 
-Once dependencies and environment variables are configured:
+Setup does not migrate, reset, or seed the database. Database preparation is a separate step. For a fresh database, once dependencies and environment variables are configured (run these from `invicta/` using the virtual environment):
 
 ```powershell
 python manage.py migrate
@@ -101,7 +90,7 @@ Configure email before steps 4 and 5. The current application does not isolate e
 
 ## Verification and known limitations
 
-Static inspection on October 20, 2026 confirmed valid Python syntax in all 52 Python source files. The default local Python environment did not contain Django, so application startup, migrations, rendered pages, and user flows have not yet been verified. All four app test modules are placeholders with no implemented tests.
+Local startup with Python 3.14 and Django 5.2.18 and test email delivery were confirmed during local setup on October 21, 2026. This does not verify every user flow. All four app test modules are placeholders with no implemented tests.
 
 Issues identified during source review:
 
@@ -111,7 +100,7 @@ Issues identified during source review:
 - `Profile.get_absolute_url()` references a route name that does not exist.
 - Pagination contains misspelled fallback template attributes and relies on JavaScript to repair links.
 - The default profile image is missing, and the shared layout lacks a mobile viewport declaration.
-- Generated Python bytecode and the populated SQLite database are tracked; there is no `.gitignore`.
-- The dependency set and local/demo configuration need restoration and verification.
+- Historical generated Python bytecode and the populated SQLite database are tracked. `.gitignore` excludes new bytecode, the local environment, and private configuration; it does not untrack existing files.
+- The dependency file pins direct dependencies; it is not a complete lock file. A clean installation on another device still needs verification.
 
 See [the Romanian project analysis](docs/PROJECT_ANALYSIS_RO.md) for the detailed assessment and proposed portfolio work. Resolve the authorization issues and validate the setup before exposing this application publicly.
