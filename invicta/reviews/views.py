@@ -1,4 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
+from django.core.exceptions import PermissionDenied
+from lessons.models import Lesson
 from reviews.models import Review
 from accounts.models import User, Teacher
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
@@ -18,14 +20,25 @@ class CreateReview(LoginRequiredMixin, generic.CreateView):
     model = Review
     template_name = 'reviews/review_create.html'
 
+    def dispatch(self, request, *args, **kwargs):
+        self.teacher = get_object_or_404(Teacher, pk=kwargs['pk'])
+        if not Lesson.objects.filter(
+            user=request.user, teacher=self.teacher, accepted=True
+        ).exists():
+            raise PermissionDenied
+        return super().dispatch(request, *args, **kwargs)
+
     def form_valid(self, form):
         form.instance.user = self.request.user
-        form.instance.teacher = Teacher.objects.get(pk=self.kwargs.get('pk'))
+        form.instance.teacher = self.teacher
+        if Review.objects.filter(user=self.request.user, teacher=self.teacher).exists():
+            form.add_error(None, 'You already reviewed this teacher. You can edit your existing review.')
+            return self.form_invalid(form)
         return super(CreateReview, self).form_valid(form)
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['teacher_object'] = Teacher.objects.get(pk=self.kwargs.get('pk'))
+        context['teacher_object'] = self.teacher
         return context
 
     def get_success_url(self, **kwargs):
@@ -68,6 +81,9 @@ class UpdateReview(LoginRequiredMixin,generic.UpdateView):
     fields = ["rating","description"]
     model = Review
     template_name = 'reviews/review_update.html'
+
+    def get_queryset(self):
+        return super().get_queryset().filter(user=self.request.user)
 
     def get_success_url(self, **kwargs):
         return reverse_lazy("reviews:student_reviews", kwargs={'pk': self.request.user.pk})

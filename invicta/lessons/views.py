@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib import messages
 from django.urls import reverse, reverse_lazy
@@ -72,7 +72,9 @@ class TeacherLessons(generic.ListView):
         time = request.POST.get("time")
         lesson_id = request.POST.get("lesson_id")
         
-        lesson_object = Lesson.objects.get(id=lesson_id)
+        lesson_object = get_object_or_404(
+            self.get_queryset(), id=lesson_id, accepted=False
+        )
         lesson_object.accepted = True
         lesson_object.planned_date = date
         lesson_object.planned_time = time
@@ -114,6 +116,11 @@ class StudentLessons(generic.ListView):
 class DeleteLesson(LoginRequiredMixin, generic.DeleteView):
     model = Lesson
     template_name = "lessons/lesson_confirm_delete.html"
+
+    def get_queryset(self):
+        return super().get_queryset().filter(
+            teacher__user=self.request.user, accepted=False
+        )
 
     def delete(self, *args, **kwargs):
         messages.success(self.request, "Lesson Denied")

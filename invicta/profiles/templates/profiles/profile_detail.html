@@ -73,7 +73,13 @@
             <a class="btn btn-primary" href="{% url 'reviews:teacher_reviews' pk=profile.teacher.pk %}">REVIEWS</a>
         {% endif %}
         {% if user.is_student %}
-            <a class="btn btn-primary" href="{% url 'reviews:create_review' pk=profile.teacher.pk %}">LEAVE A REVIEW!</a>
+            {% if existing_review %}
+                <a class="btn btn-primary" href="{% url 'reviews:update_review' pk=existing_review.pk %}">EDIT YOUR REVIEW</a>
+            {% elif can_review %}
+                <a class="btn btn-primary" href="{% url 'reviews:create_review' pk=profile.teacher.pk %}">LEAVE A REVIEW!</a>
+            {% else %}
+                <p>You can leave a review once this teacher accepts a lesson request from you.</p>
+            {% endif %}
         {% endif %}
     </div>
 

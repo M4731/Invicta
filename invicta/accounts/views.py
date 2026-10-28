@@ -26,6 +26,9 @@ class UserUpdateView(UpdateView):
     fields = ['username','first_name','last_name','email','phone_number']
     template_name = 'accounts/update.html'
 
+    def get_queryset(self):
+        return super().get_queryset().filter(pk=self.request.user.pk)
+
     def get_success_url(self):
         return reverse('home')
     
@@ -44,6 +47,9 @@ class TeacherUpdateView(UpdateView):
     fields = ['username','first_name','last_name','email','phone_number']
     template_name = 'accounts/update_teacher.html'
 
+    def get_queryset(self):
+        return super().get_queryset().filter(pk=self.request.user.pk)
+
     def get_success_url(self):
         return reverse('home')
     
@@ -61,6 +67,9 @@ class TeacherInfoUpdateView(UpdateView):
     model = Teacher
     fields = ['price','subject']
     template_name = 'accounts/update_teacher_info.html'
+
+    def get_queryset(self):
+        return super().get_queryset().filter(user=self.request.user)
 
     def get_success_url(self):
         return reverse('home')
