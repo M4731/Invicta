@@ -1,106 +1,115 @@
 # Invicta
 
-Invicta is a Django web application that connects students with private tutors. Students can browse teachers by subject, request lessons, and leave reviews. Teachers can manage their profiles and accept lesson requests with a proposed date and time.
+**A web application that connects students with private tutors.**
 
-This repository contains the original application, with migrations generated in August 2022. It is being prepared for a portfolio; the setup and known limitations below describe the current code, rather than a production-ready release.
+Invicta helps students find a teacher, request a lesson, and share feedback. Teachers can present their experience, set their price, and manage lesson requests in one place.
 
-## Features
+Originally developed as my bachelor's degree project in 2022, the application is built with Python and Django.
 
-- Separate student and teacher registration, with session-based authentication.
-- Teacher profiles with an uploaded photo, description, subject, and price in RON.
-- Teacher directory with subject filtering and pagination.
-- Lesson requests containing learning requirements and availability notes.
-- Teacher acceptance of requests with a scheduled date and time, or rejection by deleting the request.
-- Email notifications for new requests and accepted lessons.
-- Teacher reviews with ratings from 1 to 10 and an average rating on profiles.
-- Student review creation, editing, and deletion, with one review per student and teacher at database level.
-- Contact form that sends email to the configured application mailbox.
-- Django administration for users, subjects, teachers, profiles, lessons, and reviews.
+## What you can do
 
-The application coordinates requests. It does not implement payments, video lessons, calendar conflict detection, or a requirement to complete a lesson before reviewing a teacher.
+- **Find a tutor:** browse teacher profiles and filter by subject. View descriptions, photos, prices in RON, and student ratings.
+- **Request a lesson:** tell a teacher what you want to learn and when you are available.
+- **Manage requests:** teachers can accept a request with a date and time or decline it.
+- **Receive email notifications:** teachers are notified about new requests, and students receive confirmation when a lesson is accepted.
+- **Share feedback:** students can write, edit, and delete reviews, with ratings from 1 to 10.
+- **Manage your account:** separate registration for students and teachers, with login and account editing.
+- **Contact the application team:** send a message through the contact form.
 
-## Technology and structure
+## How it works
 
-Python, Django, SQLite, Django templates, custom CSS and JavaScript, Bootstrap, django-filter, and SMTP email.
+1. **Teachers** register, choose a subject and price, and add a profile description and photo.
+2. **Students** register, sign in, and browse the teacher directory to find a suitable tutor.
+3. A student sends a lesson request describing their learning goals and availability.
+4. The teacher reviews the request and confirms a date and time. The student receives an email confirmation.
+5. Students can share their feedback on teacher profiles.
 
-```text
-invicta/
-  manage.py
-  requirements.txt
-  invicta/       # Settings, main routes, home, teacher directory, contact form
-  accounts/      # Custom user, student/teacher signup, subjects and prices
-  profiles/      # Teacher profiles and automatic profile creation via signals
-  lessons/       # Lesson requests, acceptance, rejection, notifications
-  reviews/       # Ratings and review management
-  templates/     # Shared layout and general pages
-  static/        # Styles, scripts and images
-  media/         # Uploaded profile images
+Administrators use Django's built-in admin panel to manage subjects, accounts, profiles, lessons, and reviews.
+
+## Technologies
+
+| Technology | Role |
+| --- | --- |
+| Python 3.14 & Django 5.2 | Application logic, page rendering, forms, and authentication |
+| SQLite | Stores accounts, profiles, lesson requests, and reviews |
+| HTML, CSS, JavaScript & Bootstrap | Page layout, styling, and browser interactions |
+| django-filter | Filters the teacher directory by subject |
+| Pillow | Supports uploaded profile images |
+| Gmail SMTP | Sends contact messages and lesson notifications |
+| python-dotenv | Loads local configuration from `.env` |
+| Argon2 & bcrypt | Support Django's configured password hashing |
+
+## Technical overview
+
+Invicta is a server-rendered Django application: Django handles requests, reads and saves data through its ORM, and renders HTML templates for the browser. Authentication uses Django sessions and a custom user model with student and teacher roles.
+
+The code is organized into four main apps:
+
+| App | Responsibility |
+| --- | --- |
+| `accounts` | Users, registration, subjects, and teacher pricing |
+| `profiles` | Teacher descriptions, photos, and profile pages |
+| `lessons` | Lesson requests, scheduling, and email notifications |
+| `reviews` | Student feedback and teacher ratings |
+
+Each teacher is linked to a user account and a profile. Django signals create the profile automatically when a teacher is registered. Lessons and reviews connect students to teachers, while shared templates provide a consistent layout across the application.
+
+## Run locally on Windows
+
+### 1. Prepare the project
+
+Install **Python 3.14** with the `py` launcher or `python` available in PATH. Clone this repository, or download and extract it, then open the project folder.
+
+Double-click **`setup.bat`**. It will:
+
+- Create the `.venv` Python environment and install the required packages.
+- Create `invicta/.env` with a generated application secret key.
+- Run Django's configuration check.
+
+An internet connection is needed to download the packages. Running setup again preserves your existing environment and `.env` configuration. Database preparation is handled separately below.
+
+### 2. Configure email
+
+Open `invicta/.env` in a text editor and complete these values:
+
+```dotenv
+EMAIL_MAIL=your-test-account@gmail.com
+EMAIL_PASSWORD=your-google-app-password
 ```
 
-The custom `User` extends Django's `AbstractUser`. A `Teacher` belongs to one user and one subject, and has one `Profile`. Each `Lesson` and `Review` links a student user to a teacher. Pages are rendered on the server using Django class-based views.
+Use a Gmail account with a Google app password. These settings enable contact messages and lesson notifications. Keep your credentials in the private `.env` file, which is excluded from Git.
 
-## Local development setup
+Setup generates `SECRET_KEY` automatically and sets `DEBUG=1` for local development. The shared `invicta/.env.example` file provides the configuration template.
 
-### Windows quick start
+### 3. Start the application
 
-Install Python **3.14** with the `py` launcher or `python` available in PATH, then clone this repository. Internet access is required to download dependencies.
+Double-click **`run.bat`**, then open [http://127.0.0.1:8000/](http://127.0.0.1:8000/) in your browser.
 
-1. Double-click `setup.bat` in the repository root. It runs `setup.ps1`, creates `.venv` if needed, checks Python 3.14, installs `invicta/requirements.txt`, prepares `invicta/.env`, and runs Django's configuration check. The window stays open so errors can be read.
-2. Open `invicta/.env` in a text editor and fill in `EMAIL_MAIL` (the Gmail test account) and `EMAIL_PASSWORD` (its Google app password). These are needed for contact and lesson emails, not for the home page.
-3. Double-click `run.bat`, wait for the server to start, and open http://127.0.0.1:8000/ in your browser. Keep the console open; stop the server with Ctrl+C.
+Keep the server window open while using the application. Press **Ctrl+C** to stop it. Restart the server after changing `.env`.
 
-No virtual environment activation or typed startup commands are needed. From PowerShell, setup can also be run with `.\setup.ps1`.
+### Database and administration
 
-Setup preserves an existing `.venv` and `.env`; an environment with a different Python version is reported rather than deleted. Re-running setup installs the declared dependencies again. Failures stop setup and display an error; fix the reported problem and rerun it.
+The application uses `invicta/db.sqlite3`. The setup script preserves this database.
 
-### Environment variables
-
-`invicta/.env.example` is the shared template with empty credentials. On first setup, the script creates `invicta/.env` from it and fills `SECRET_KEY` with a cryptographically random value. `DEBUG=1` enables local development mode. An existing `.env` is never overwritten, even if incomplete; edit it manually when needed.
-
-The private `.env` and `.venv` are excluded from Git. Each new computer builds its own environment and secret key; transfer email credentials separately or use another test account. Never commit actual passwords to `.env.example`.
-
-Django settings load `invicta/.env` through `python-dotenv`. Existing process environment variables take precedence. Email uses Gmail SMTP on port 587 with TLS and sends real messages when configured. Restart the server after changing `.env`.
-
-### Database and server
-
-For a clean setup, preserve the supplied `db.sqlite3` outside the working copy before replacing it with a new database. The repository currently includes an existing populated database; do not assume its records are suitable public demo data.
-
-Setup does not migrate, reset, or seed the database. Database preparation is a separate step. For a fresh database, once dependencies and environment variables are configured (run these from `invicta/` using the virtual environment):
+To create the database tables when starting with a fresh database, run this command in PowerShell from the repository root:
 
 ```powershell
-python manage.py migrate
-python manage.py createsuperuser
-python manage.py runserver 127.0.0.1:8000
+.\.venv\Scripts\python.exe invicta/manage.py migrate
 ```
 
-Open `http://127.0.0.1:8000/`. The current host configuration includes `127.0.0.1`, but does not include `localhost`.
+To create your own administrator account:
 
-On a fresh database, create subjects through `/admin/` before registering teachers. Teachers select an existing subject during registration. New teacher profiles currently reference `media/profile_images/default.jpg`, which is missing from this repository; upload an image or add a default image as part of setup.
+```powershell
+.\.venv\Scripts\python.exe invicta/manage.py createsuperuser
+```
 
-## Suggested demonstration
+With the server running, sign in at [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/). On a fresh database, add at least one subject before registering a teacher.
 
-1. Add a subject using the administrator account.
-2. Register a teacher, set a price, and edit the profile description and image.
-3. Register a student and filter the teacher directory by subject.
-4. Request a lesson, including requirements and availability.
-5. Sign in as the teacher and accept the request with a date and time.
-6. Sign in as the student to view the accepted request and submit a review.
+### Terminal alternative
 
-Configure email before steps 4 and 5. The current application does not isolate email delivery failures from the user-facing request flow.
+You can also run setup and start the server from PowerShell, from the repository root:
 
-## Verification and known limitations
-
-Local startup with Python 3.14 and Django 5.2.18 and test email delivery were confirmed during local setup on October 21, 2026. This does not verify every user flow. All four app test modules are placeholders with no implemented tests.
-
-Issues identified during source review:
-
-- Several account/profile/review update and lesson management views lack ownership restrictions on the server. Hiding an edit form in a template does not protect a POST request.
-- Lesson acceptance reads date and time directly from POST data without a validating Django form or scheduling conflict checks.
-- Duplicate review database errors are caught and logged in the model without a useful validation message to the user.
-- `Profile.get_absolute_url()` references a route name that does not exist.
-- Pagination contains misspelled fallback template attributes and relies on JavaScript to repair links.
-- The default profile image is missing, and the shared layout lacks a mobile viewport declaration.
-- Historical generated Python bytecode and the populated SQLite database are tracked. `.gitignore` excludes new bytecode, the local environment, and private configuration; it does not untrack existing files.
-- The dependency file pins direct dependencies; it is not a complete lock file. A clean installation on another device still needs verification.
-
-See [the Romanian project analysis](docs/PROJECT_ANALYSIS_RO.md) for the detailed assessment and proposed portfolio work. Resolve the authorization issues and validate the setup before exposing this application publicly.
+```powershell
+.\setup.ps1
+.\.venv\Scripts\python.exe invicta/manage.py runserver 127.0.0.1:8000
+```
